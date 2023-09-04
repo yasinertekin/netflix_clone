@@ -10,13 +10,15 @@ MoviesModel _$MoviesModelFromJson(Map<String, dynamic> json) => MoviesModel(
       adult: json['adult'] as bool?,
       backdropPath: json['backdropPath'] as String?,
       id: json['id'] as int?,
+      name: json['name'] as String?,
       title: json['title'] as String?,
       originalLanguage: json['originalLanguage'] as String?,
       originalTitle: json['originalTitle'] as String?,
       overview: json['overview'] as String?,
       poster_path: json['poster_path'] as String?,
-      mediaType: json['mediaType'] as String?,
-      genreIds: (json['genreIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      media_type: json['media_type'] as String?,
+      genreIds:
+          (json['genreIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
       popularity: (json['popularity'] as num?)?.toDouble(),
       releaseDate: json['releaseDate'] as String?,
       video: json['video'] as bool?,
@@ -24,7 +26,8 @@ MoviesModel _$MoviesModelFromJson(Map<String, dynamic> json) => MoviesModel(
       voteCount: json['voteCount'] as int?,
     );
 
-Map<String, dynamic> _$MoviesModelToJson(MoviesModel instance) => <String, dynamic>{
+Map<String, dynamic> _$MoviesModelToJson(MoviesModel instance) =>
+    <String, dynamic>{
       'adult': instance.adult,
       'backdropPath': instance.backdropPath,
       'id': instance.id,
@@ -33,11 +36,12 @@ Map<String, dynamic> _$MoviesModelToJson(MoviesModel instance) => <String, dynam
       'originalTitle': instance.originalTitle,
       'overview': instance.overview,
       'poster_path': instance.poster_path,
-      'mediaType': instance.mediaType,
+      'media_type': instance.media_type,
       'genreIds': instance.genreIds,
       'popularity': instance.popularity,
       'releaseDate': instance.releaseDate,
       'video': instance.video,
       'voteAverage': instance.voteAverage,
       'voteCount': instance.voteCount,
+      'name': instance.name,
     };

@@ -12,24 +12,26 @@ class MoviesModel {
   final String? originalTitle;
   final String? overview;
   final String? poster_path;
-  final String? mediaType;
+  final String? media_type;
   final List<int>? genreIds;
   final double? popularity;
   final String? releaseDate;
   final bool? video;
   final double? voteAverage;
   final int? voteCount;
+  final String? name;
 
   MoviesModel(
       {this.adult,
       this.backdropPath,
       this.id,
+      this.name,
       this.title,
       this.originalLanguage,
       this.originalTitle,
       this.overview,
       this.poster_path,
-      this.mediaType,
+      this.media_type,
       this.genreIds,
       this.popularity,
       this.releaseDate,
