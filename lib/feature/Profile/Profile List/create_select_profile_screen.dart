@@ -4,6 +4,8 @@ import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
 import 'package:netflix_clone/feature/TabBar/tab_bar_screen.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
+import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
+import 'package:netflix_clone/product/widgets/Text%20Button/edit_text_button.dart';
 
 import '../Add Profile/add_profile.dart';
 
@@ -117,56 +119,46 @@ class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager 
       Text(viewModel.profiles[index]['username'] ?? '');
 
   InkWell _profileAvatarTile(BuildContext context, CreateSelectProfileViewModel viewModel, int index) {
-    return InkWell(onTap: () {
-      viewModel.isEditing
-          ? navigatoToWidget(
-              context,
-              TabBarScreen(
-                initialTabIndex: 2,
-                profileImage: viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
-                profileName: viewModel.profiles[index]['username'] ?? '',
-              ),
-            )
-          : navigatoToWidget(
-              context,
-              TabBarScreen(
-                profileImage: viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
-                profileName: viewModel.profiles[index]['username'] ?? '',
-              ),
-            );
-    }, child: Observer(builder: (_) {
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          Card(
-            color: context.randomColor,
-            elevation: 10,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(viewModel.isEditing ? Colors.black : Colors.transparent, BlendMode.color),
-                child: Image.network(
-                  viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
-                  height: context.dynamicHeight(0.20),
-                  width: context.dynamicWidth(0.32),
-                  fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        viewModel.isEditing
+            ? navigatoToWidget(
+                context,
+                TabBarScreen(
+                  initialTabIndex: 2,
+                  profileImage: viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
+                  profileName: viewModel.profiles[index]['username'] ?? '',
                 ),
+              )
+            : navigatoToWidget(
+                context,
+                TabBarScreen(
+                  profileImage: viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
+                  profileName: viewModel.profiles[index]['username'] ?? '',
+                ),
+              );
+      },
+      child: Observer(
+        builder: (_) {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              AvatarCard(
+                isEditing: viewModel.isEditing,
+                photoURL: viewModel.profiles[index]['photoURL'] ?? 'https://picsum.photos/200',
               ),
-            ),
-          ),
-          viewModel.isEditing
-              ? const Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                  size: 30,
-                )
-              : const SizedBox.shrink()
-        ],
-      );
-    }));
+              viewModel.isEditing
+                  ? const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                      size: 30,
+                    )
+                  : const SizedBox.shrink()
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -183,37 +175,9 @@ class _ProfileListAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: const Text('Who is Watcing?'),
-      actions: [_EditTextButton(viewModel: viewModel)],
+      actions: [EditTextButton(viewModel: viewModel)],
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
-  }
-}
-
-class _EditTextButton extends StatelessWidget {
-  const _EditTextButton({
-    required this.viewModel,
-  });
-
-  final CreateSelectProfileViewModel viewModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return TextButton(
-        onPressed: () {
-          viewModel.setIsEditing();
-        },
-        child: viewModel.isEditing
-            ? const Text(
-                'Done',
-                style: TextStyle(color: Colors.white),
-              )
-            : const Text(
-                'Edit',
-                style: TextStyle(color: Colors.white),
-              ),
-      );
-    });
   }
 }
