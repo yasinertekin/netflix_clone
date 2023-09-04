@@ -3,12 +3,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
-import 'package:netflix_clone/product/widgets/netflix_appbar_logo.dart';
-import 'package:netflix_clone/product/widgets/support_text_button.dart';
+import 'package:netflix_clone/product/widgets/Logo/netflix_appbar_logo.dart';
+import 'package:netflix_clone/product/widgets/Text%20Button/support_text_button.dart';
 
 import '../../product/constants/color_constants.dart';
 import '../../product/models/OnBoardScreenModel/onboard_screen_model.dart';
-import '../../product/widgets/custom_tab_indicator.dart';
+import '../../product/widgets/Tab Indicator/custom_tab_indicator.dart';
 import '../auth/authentication_view.dart';
 import 'onboard_screen_provider.dart';
 
