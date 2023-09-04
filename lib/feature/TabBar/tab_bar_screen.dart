@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Home/home_view.dart';
+import 'package:netflix_clone/feature/Profile/profile_view.dart';
 
 // ignore: must_be_immutable
 class TabBarScreen extends StatefulWidget {
-  TabBarScreen({super.key, this.profileName, this.profileImage});
+  TabBarScreen({super.key, this.profileName, this.profileImage, this.initialTabIndex = 0});
 
   String? profileName;
   String? profileImage;
+  final int initialTabIndex;
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState();
@@ -18,7 +20,8 @@ class _TabBarScreenState extends State<TabBarScreen> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _MyTabViews.values.length, vsync: this);
+    _tabController =
+        TabController(length: _MyTabViews.values.length, vsync: this, initialIndex: widget.initialTabIndex);
   }
 
   @override
@@ -105,9 +108,7 @@ class _tabBarView extends StatelessWidget {
       Container(
         color: Colors.red,
       ),
-      Container(
-        color: Colors.red,
-      ),
+      const ProfileView(),
     ]);
   }
 }
