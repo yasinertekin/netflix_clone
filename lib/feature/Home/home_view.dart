@@ -121,9 +121,10 @@ class _ContentSection extends StatelessWidget {
           // ignore: deprecated_member_use
           width: context.dynamicWidth(1),
           child: _CardListPosterBuilder(
-            const Key('trendMovieList'), // Benzersiz bir anahtar trendMovieList için
-            _trendMovieListViewModel.trendMovieList.length, // Pass the length of the list
-            (index) => _trendMovieListViewModel.trendMovieList[index].poster_path!,
+            getImagePath: (index) => _trendMovieListViewModel.trendMovieList[index].poster_path!, // Add this line ,
+            mediaType: _trendMovieListViewModel.trendMovieList[index].media_type!, // Add this line
+            count: _trendMovieListViewModel.trendMovieList.length, // Pass the length of the list
+            // Pass the length of the list
           ),
         ),
         Text('Tv Shows',
@@ -134,9 +135,9 @@ class _ContentSection extends StatelessWidget {
         SizedBox(
           height: context.dynamicHeight(0.3),
           child: _CardListPosterBuilder(
-            const Key('tvShowList'), // Benzersiz bir anahtar tvShowList için
-            _trendMovieListViewModel.tvShowList.length, // Pass the length of the list
-            (index) => _trendMovieListViewModel.tvShowList[index].poster_path!,
+            getImagePath: (index) => _trendMovieListViewModel.tvShowList[index].poster_path!, // Add this line ,
+            mediaType: _trendMovieListViewModel.tvShowList[index].media_type!, // Add this line
+            count: _trendMovieListViewModel.tvShowList.length, // Pass the length of the list
             // Provide a unique key for tvShowList
           ),
         ),
@@ -233,7 +234,7 @@ class _GradientCardWithOverlay extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             const Color(0xff5e757d),
-            ColorConstants.black.withOpacity(0.5),
+            ColorConstants.black.withOpacity(0.7),
           ],
         ),
       ),
@@ -286,6 +287,9 @@ class _RoundedImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       elevation: 50,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
@@ -356,13 +360,12 @@ class _ButtonRowPositioned extends StatelessWidget {
 
 class _CardListPosterBuilder extends StatelessWidget {
   int count;
+  final String mediaType; // Yeni eklenen mediaType
+
   final Function(int index) getImagePath; // Add this property
 
-  _CardListPosterBuilder(
-    Key? key,
-    this.count,
-    this.getImagePath,
-  ) : super(key: key);
+  _CardListPosterBuilder({Key? key, required this.count, required this.getImagePath, required this.mediaType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -370,17 +373,18 @@ class _CardListPosterBuilder extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: count,
         itemBuilder: (context, index) {
-          return _CardListPoster(index, getImagePath(index)); // Pass the index and get the imagePath
+          return _CardListPoster(index, getImagePath(index), mediaType); // Pass the index and get the imagePath
         });
   }
 }
 
 class _CardListPoster extends StatefulWidget {
   final int index;
+  final String mediaType; // Yeni eklenen mediaType
 
   String imagePath; // Add this line to receive the index value
 
-  _CardListPoster(this.index, this.imagePath);
+  _CardListPoster(this.index, this.imagePath, this.mediaType);
   @override
   State<_CardListPoster> createState() => _CardListPosterState();
 }
@@ -451,7 +455,7 @@ class _CardListPosterState extends State<_CardListPoster> with TickerProviderSta
                               topRight: Radius.circular(20),
                             ),
                           ),
-                          child: _trendMovieListViewModel.showMovieDetail
+                          child: widget.mediaType == 'movie'
                               ? DetailScreen(
                                   movieID: _trendMovieListViewModel.trendMovieList[widget.index].id!.toString(),
                                   moviesModel: _trendMovieListViewModel.trendMovieList[widget.index],
