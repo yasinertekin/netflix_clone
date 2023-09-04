@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/feature/CreateProfile/create_select_profile_screen.dart';
 import 'package:netflix_clone/feature/OnBoard/onboard_screen.dart';
-import 'package:netflix_clone/feature/Profile/create_select_profile_screen.dart';
 
 class AppStarter extends StatelessWidget {
   const AppStarter({super.key});
