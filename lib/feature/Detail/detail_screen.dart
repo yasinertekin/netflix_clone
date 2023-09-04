@@ -144,22 +144,30 @@ class DetailScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              moviesModel!.title.toString(),
-                              style: context.textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            moviesModel!.media_type == 'movie'
+                                ? Text(
+                                    moviesModel!.title.toString(),
+                                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                  )
+                                : Text(
+                                    moviesModel!.name.toString(),
+                                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                  ),
                             _MovieStatsBar(moviesModel: moviesModel),
                             Row(
                               children: [
                                 Card(
                                   color: Colors.red,
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      size: 20,
-                                      Icons.thumb_up_alt_rounded,
+                                  child: Padding(
+                                    padding: context.padding.low,
+                                    child: const Icon(
+                                      Icons.thumb_up_rounded,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -192,6 +200,13 @@ class DetailScreen extends StatelessWidget {
                               ),
                             ),
                             ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.grey[800],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
                                 onPressed: () {},
                                 child: const Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -241,29 +256,30 @@ class DetailScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.add),
-                                    Text('My List'),
+                                    IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                                    const Text('My List'),
                                   ],
                                 ),
-                                Column(
+                                const Column(
                                   children: [
                                     Icon(Icons.thumb_up_alt_outlined),
                                     Text('Rate'),
                                   ],
                                 ),
-                                Column(
+                                const Column(
                                   children: [
                                     Icon(Icons.share),
                                     Text('Share'),
                                   ],
                                 ),
+                                const Divider(),
                               ],
                             ),
                             Divider(
