@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/create_select_profile_screen.dart';
+import 'package:netflix_clone/feature/CreateProfile/create_select_profile_screen.dart';
 import 'package:netflix_clone/feature/auth/authentication_view_model.dart';
 import 'package:netflix_clone/product/constants/color_constants.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
