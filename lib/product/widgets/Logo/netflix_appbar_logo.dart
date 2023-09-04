@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
-import '../enums/image_enums.dart';
+import '../../enums/image_enums.dart';
 
 class NetflixAppBarLogo extends StatelessWidget {
   const NetflixAppBarLogo({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/OnBoardScreenModel/onboard_screen_model.dart';
+import '../../models/OnBoardScreenModel/onboard_screen_model.dart';
 
 class CustomTabIndicator extends StatefulWidget {
   const CustomTabIndicator({super.key, required this.selectedIndex});
