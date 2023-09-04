@@ -25,7 +25,7 @@ abstract class _MovieViewModelBase with Store {
   }
 
   @observable
-  bool showMovieDetail = false; // Varsayılan olarak film detayını göster
+  bool showMovieDetail = true; // Varsayılan olarak film detayını göster
 
   @action
   void toggleDetailType() {

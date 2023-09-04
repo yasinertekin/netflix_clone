@@ -9,7 +9,8 @@ part of 'home_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$MovieViewModel on _MovieViewModelBase, Store {
-  late final _$isLoadingAtom = Atom(name: '_MovieViewModelBase.isLoading', context: context);
+  late final _$isLoadingAtom =
+      Atom(name: '_MovieViewModelBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -24,7 +25,8 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
     });
   }
 
-  late final _$trendMovieListAtom = Atom(name: '_MovieViewModelBase.trendMovieList', context: context);
+  late final _$trendMovieListAtom =
+      Atom(name: '_MovieViewModelBase.trendMovieList', context: context);
 
   @override
   List<MoviesModel> get trendMovieList {
@@ -39,7 +41,8 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
     });
   }
 
-  late final _$tvShowListAtom = Atom(name: '_MovieViewModelBase.tvShowList', context: context);
+  late final _$tvShowListAtom =
+      Atom(name: '_MovieViewModelBase.tvShowList', context: context);
 
   @override
   List<MoviesModel> get tvShowList {
@@ -54,7 +57,8 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
     });
   }
 
-  late final _$serviceAtom = Atom(name: '_MovieViewModelBase.service', context: context);
+  late final _$serviceAtom =
+      Atom(name: '_MovieViewModelBase.service', context: context);
 
   @override
   IMoviesService get service {
@@ -69,7 +73,8 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
     });
   }
 
-  late final _$showMovieDetailAtom = Atom(name: '_MovieViewModelBase.showMovieDetail', context: context);
+  late final _$showMovieDetailAtom =
+      Atom(name: '_MovieViewModelBase.showMovieDetail', context: context);
 
   @override
   bool get showMovieDetail {
@@ -84,19 +89,21 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
     });
   }
 
-  late final _$fetchDatasAsyncAction = AsyncAction('_MovieViewModelBase.fetchDatas', context: context);
+  late final _$fetchDatasAsyncAction =
+      AsyncAction('_MovieViewModelBase.fetchDatas', context: context);
 
   @override
   Future<void> fetchDatas() {
     return _$fetchDatasAsyncAction.run(() => super.fetchDatas());
   }
 
-  late final _$_MovieViewModelBaseActionController = ActionController(name: '_MovieViewModelBase', context: context);
+  late final _$_MovieViewModelBaseActionController =
+      ActionController(name: '_MovieViewModelBase', context: context);
 
   @override
   void toggleDetailType() {
-    final _$actionInfo =
-        _$_MovieViewModelBaseActionController.startAction(name: '_MovieViewModelBase.toggleDetailType');
+    final _$actionInfo = _$_MovieViewModelBaseActionController.startAction(
+        name: '_MovieViewModelBase.toggleDetailType');
     try {
       return super.toggleDetailType();
     } finally {
@@ -106,7 +113,8 @@ mixin _$MovieViewModel on _MovieViewModelBase, Store {
 
   @override
   void changeLoading() {
-    final _$actionInfo = _$_MovieViewModelBaseActionController.startAction(name: '_MovieViewModelBase.changeLoading');
+    final _$actionInfo = _$_MovieViewModelBaseActionController.startAction(
+        name: '_MovieViewModelBase.changeLoading');
     try {
       return super.changeLoading();
     } finally {
