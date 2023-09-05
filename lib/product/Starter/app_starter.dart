@@ -13,7 +13,7 @@ class AppStarter extends StatelessWidget {
 
     // Kullanıcı oturum açmışsa home ekranını başlat, aksi takdirde onboard veya auth ekranını başlat
     if (user != null) {
-      return const CreateSelectProfileScreen();
+      return CreateSelectProfileScreen();
     } else {
       return const OnBoardScreen(); // veya AuthScreen();
     }

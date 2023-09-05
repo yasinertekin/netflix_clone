@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Profile/Avatar%20Select/avatar_select.dart';
 import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_screen.dart';
@@ -85,7 +86,12 @@ class AddProfile extends StatelessWidget with MyNavigatorManager {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               _addProfileBodyBottomSheetHeader(context),
-              SelectAvatarCardS(viewModel: viewModel),
+              Observer(builder: (_) {
+                return SelectAvatarCardS(
+                  viewModel: viewModel,
+                  photoURL: viewModel.newPhotoURL.isNotEmpty ? viewModel.newPhotoURL : null,
+                );
+              }),
               Padding(
                 padding: context.padding.onlyTopLow,
                 child: SizedBox(

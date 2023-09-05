@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
+import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
 
 class AvatarCard extends StatelessWidget {
   final bool? isEditing;
@@ -18,25 +20,36 @@ class AvatarCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: context.randomColor,
-      elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: ColorFiltered(
-          colorFilter:
-              ColorFilter.mode(isEditing != null && isEditing! ? Colors.black : Colors.transparent, BlendMode.color),
-          child: Image.network(
-            photos != null && photoIndex != null ? photos![photoIndex!] : photoURL!,
-            height: context.dynamicHeight(0.20),
-            width: context.dynamicWidth(0.32),
-            fit: BoxFit.cover,
+    final viewModel = CreateSelectProfileViewModel();
+    String avatar;
+    if (viewModel.newPhotoURL.isNotEmpty) {
+      avatar = viewModel.newPhotoURL;
+    } else if (viewModel.newPhotoURL.isEmpty && photoURL == null) {
+      avatar = photos != null && photoIndex != null ? photos![photoIndex!] : 'https://picsum.photos/200/300';
+    } else {
+      avatar = photos != null && photoIndex != null ? photos![photoIndex!] : photoURL!;
+    }
+    return Observer(builder: (_) {
+      return Card(
+        color: context.randomColor,
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: ColorFiltered(
+            colorFilter:
+                ColorFilter.mode(isEditing != null && isEditing! ? Colors.black : Colors.transparent, BlendMode.color),
+            child: Image.network(
+              avatar,
+              height: context.dynamicHeight(0.20),
+              width: context.dynamicWidth(0.32),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -28,7 +28,7 @@ class AuthenticationView extends StatelessWidget {
               authViewModel.fetchUserDetail(state.user);
               authViewModel.isLogin = true;
               authViewModel.isLogin
-                  ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateSelectProfileScreen()))
+                  ? Navigator.push(context, MaterialPageRoute(builder: (context) => CreateSelectProfileScreen()))
                   : null;
             }
           }),

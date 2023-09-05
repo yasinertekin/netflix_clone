@@ -129,4 +129,24 @@ abstract class _CreateSelectProfileViewModelBase with Store {
       rethrow; // Hata durumunda isteği iletebilir veya işleyebilirsiniz
     }
   }
+
+  @action
+  Future<void> updateProfile(int index, String username, String? photoURL) {
+    // İndeks sınırları kontrolü
+    if (index >= 0 && index < profiles.length) {
+      // Seçilen profili güncelle
+      profiles[index] = {
+        'username': username,
+        'photoURL': photoURL,
+      };
+
+      // Firestore'daki profili güncelleyin
+      return profileDoc.set({
+        'profiles': profiles,
+      });
+    } else {
+      print('Geçersiz indeks');
+      return Future.value();
+    }
+  }
 }

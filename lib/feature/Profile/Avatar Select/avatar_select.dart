@@ -1,23 +1,26 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_screen.dart';
 import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
 import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 import 'package:netflix_clone/product/widgets/Card/selected_photo_card_image.dart';
 import 'package:netflix_clone/product/widgets/Icon%20Button/edit_icon_button.dart';
 
 class SelectAvatarCardS extends StatelessWidget {
-  const SelectAvatarCardS({super.key, required this.viewModel});
+  const SelectAvatarCardS({super.key, required this.viewModel, this.photoURL});
   final CreateSelectProfileViewModel viewModel;
-  // END: ed8c6549bwf9
-  // END: ed8c6549bwf9
+  final String? photoURL;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [SelectAvatarCard(viewModel: viewModel)],
+      children: [
+        Observer(builder: (_) {
+          return SelectAvatarCard(viewModel: viewModel, photoURL: photoURL);
+        })
+      ],
     );
   }
 }
@@ -26,9 +29,11 @@ class SelectAvatarCard extends StatelessWidget {
   const SelectAvatarCard({
     super.key,
     required this.viewModel,
+    this.photoURL,
   });
 
   final CreateSelectProfileViewModel viewModel;
+  final String? photoURL;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,10 @@ class SelectAvatarCard extends StatelessWidget {
       },
       child: Stack(
         children: [
-          SelectedPhotoCardImage(viewModel: viewModel),
+          SelectedPhotoCardImage(
+            viewModel: viewModel,
+            photoURL: photoURL,
+          ),
           const EditIconButton(),
         ],
       ),
