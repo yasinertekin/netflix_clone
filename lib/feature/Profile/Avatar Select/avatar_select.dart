@@ -8,8 +8,8 @@ import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 import 'package:netflix_clone/product/widgets/Card/selected_photo_card_image.dart';
 import 'package:netflix_clone/product/widgets/Icon%20Button/edit_icon_button.dart';
 
-class SelectAvatarCardS extends StatelessWidget {
-  const SelectAvatarCardS({super.key, required this.viewModel, this.photoURL});
+class SelectAvatarCards extends StatelessWidget {
+  const SelectAvatarCards({super.key, required this.viewModel, this.photoURL});
   final CreateSelectProfileViewModel viewModel;
   final String? photoURL;
 

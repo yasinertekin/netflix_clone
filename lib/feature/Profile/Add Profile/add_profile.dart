@@ -87,7 +87,7 @@ class AddProfile extends StatelessWidget with MyNavigatorManager {
             children: [
               _addProfileBodyBottomSheetHeader(context),
               Observer(builder: (_) {
-                return SelectAvatarCardS(
+                return SelectAvatarCards(
                   viewModel: viewModel,
                   photoURL: viewModel.newPhotoURL.isNotEmpty ? viewModel.newPhotoURL : null,
                 );
