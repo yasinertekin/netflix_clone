@@ -11,4 +11,6 @@ class ColorConstants {
   static const Color grey = Color(0xFF808080);
   static const Color dirtyPink = Color(0xff131313);
   static const Color carbon = Color(0xff333333);
+  static const Color potBlack = Color(0xff161616);
+  static const Color blue = Color(0xff0071eb);
 }
