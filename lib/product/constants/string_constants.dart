@@ -9,4 +9,8 @@ class StringConstans {
   static const actionButtonLabelOverrideSignIn = 'Sign In';
   static const String authDescription =
       'The login process confirms that you are not a robot. with Google reCAPTCHA to prove is protected. Get more information.';
+  static const String done = 'Done';
+  static const String editProfile = 'Edit Profile';
+  static const String profileUsername = "Profile Username";
+  static const String randomImageURL = 'https://picsum.photos/200';
 }
