@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 
 import 'package:netflix_clone/feature/Detail/detail_screen.dart';
@@ -28,28 +27,24 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-          ),
-          backgroundColor: ColorConstants.black,
-          appBar: _MyHomeViewAppBar(),
-          body: _trendMovieListViewModel.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return _ContentSection(
-                      index: index,
-                    );
-                  },
-                ),
-        );
-      },
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+      ),
+      backgroundColor: ColorConstants.black,
+      appBar: _MyHomeViewAppBar(),
+      body: _trendMovieListViewModel.isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return _ContentSection(
+                  index: index,
+                );
+              },
+            ),
     );
   }
 
@@ -77,6 +72,7 @@ class HomeView extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _AppBarTitleText extends StatelessWidget {
   String? profileName;
 
@@ -358,6 +354,7 @@ class _ButtonRowPositioned extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _CardListPosterBuilder extends StatelessWidget {
   int count;
   final String mediaType; // Yeni eklenen mediaType
@@ -378,6 +375,7 @@ class _CardListPosterBuilder extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class _CardListPoster extends StatefulWidget {
   final int index;
   final String mediaType; // Yeni eklenen mediaType

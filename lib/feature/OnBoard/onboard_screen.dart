@@ -22,31 +22,35 @@ class OnBoardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstants.black,
       appBar: _myAppBar(context),
-      body: SizedBox(
-        height: context.general.mediaQuery.size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: context.general.mediaQuery.size.height * 0.7,
-              child: Observer(
-                builder: (BuildContext context) {
-                  return _myPageView(onBoardScreenProvider);
-                },
-              ),
+      body: _onboardScreenBody(context, onBoardScreenProvider),
+    );
+  }
+
+  SizedBox _onboardScreenBody(BuildContext context, OnBoardScreenProvider onBoardScreenProvider) {
+    return SizedBox(
+      height: context.general.mediaQuery.size.height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: context.general.mediaQuery.size.height * 0.7,
+            child: Observer(
+              builder: (BuildContext context) {
+                return _myPageView(onBoardScreenProvider);
+              },
             ),
-            Observer(builder: (_) {
-              return CustomTabIndicator(
-                selectedIndex: onBoardScreenProvider.selectedIndex,
-              );
-            }),
-            Padding(
-              padding: context.padding.normal,
-              child: const _CustomSignInButton(),
-            )
-          ],
-        ),
+          ),
+          Observer(builder: (_) {
+            return CustomTabIndicator(
+              selectedIndex: onBoardScreenProvider.selectedIndex,
+            );
+          }),
+          Padding(
+            padding: context.padding.normal,
+            child: const _CustomSignInButton(),
+          )
+        ],
       ),
     );
   }
