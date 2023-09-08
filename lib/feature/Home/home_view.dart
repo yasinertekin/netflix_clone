@@ -1,15 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-
 import 'package:netflix_clone/feature/Detail/detail_screen.dart';
 import 'package:netflix_clone/feature/Home/home_view_model.dart';
 import 'package:netflix_clone/feature/services/movie_service.dart';
 import 'package:netflix_clone/product/constants/color_constants.dart';
+import 'package:netflix_clone/product/constants/double_constants.dart';
+import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/enums/image_enums.dart';
+import 'package:netflix_clone/product/widgets/NetflixProgressIndicator/netflix_progress_indicator.dart';
 
-final _trendMovieListViewModel = MovieViewModel(
+final _viewModel = MovieViewModel(
   service: MoviesService(
     Dio(
       BaseOptions(
@@ -32,28 +33,25 @@ class HomeView extends StatelessWidget {
         onPressed: () {},
       ),
       backgroundColor: ColorConstants.black,
-      appBar: _MyHomeViewAppBar(),
-      body: _trendMovieListViewModel.isLoading
+      appBar: _myHomeViewAppBar(),
+      body: _viewModel.isLoading
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: NetflixProgressIndicator(
+                strokeWidth: 6.0,
+                radius: 25.0,
+                backgroundColor: ColorConstants.grey,
+                progressColor: ColorConstants.red,
+              ),
             )
-          : ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return _ContentSection(
-                  index: index,
-                );
-              },
-            ),
+          : const MovieList(),
     );
   }
 
-  // ignore: non_constant_identifier_names
-  PreferredSize _MyHomeViewAppBar() {
+  PreferredSize _myHomeViewAppBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(110),
+      preferredSize: const Size.fromHeight(DoubleConstants.preferredSizeHeightHigh),
       child: AppBar(
-        backgroundColor: const Color(0xff5e757d),
+        backgroundColor: ColorConstants.registrationBlack,
         title: _AppBarTitleText(
           key,
           profileName,
@@ -64,10 +62,28 @@ class HomeView extends StatelessWidget {
         ],
         elevation: 0,
         bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(10),
+          preferredSize: Size.fromHeight(DoubleConstants.preferredSizeHeightLow),
           child: _AppBarButtonRow(),
         ),
       ),
+    );
+  }
+}
+
+class MovieList extends StatelessWidget {
+  const MovieList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 1,
+      itemBuilder: (context, index) {
+        return _ContentSection(
+          index: index,
+        );
+      },
     );
   }
 }
@@ -84,8 +100,8 @@ class _AppBarTitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      profileName ?? 'Netflix',
-      style: context.textTheme.titleLarge?.copyWith(
+      profileName ?? StringConstans.netflix,
+      style: context.general.textTheme.titleLarge?.copyWith(
         color: ColorConstants.white,
       ),
     );
@@ -104,22 +120,14 @@ class _ContentSection extends StatelessWidget {
         _GradientCardWithOverlay(
           index: index,
         ),
-        Text(
-          'Trends',
-          style: context.textTheme.headlineSmall?.copyWith(
-            color: ColorConstants.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        const _TrendMovieListTitle(),
         SizedBox(
-          // ignore: deprecated_member_use
-          height: context.dynamicHeight(0.3),
-          // ignore: deprecated_member_use
-          width: context.dynamicWidth(1),
+          height: context.general.mediaQuery.size.height * 0.3,
+          width: context.general.mediaQuery.size.width,
           child: _CardListPosterBuilder(
-            getImagePath: (index) => _trendMovieListViewModel.trendMovieList[index].poster_path!, // Add this line ,
-            mediaType: _trendMovieListViewModel.trendMovieList[index].media_type!, // Add this line
-            count: _trendMovieListViewModel.trendMovieList.length, // Pass the length of the list
+            getImagePath: (index) => _viewModel.trendMovieList[index].poster_path!, // Add this line ,
+            mediaType: _viewModel.trendMovieList[index].media_type!, // Add this line
+            count: _viewModel.trendMovieList.length, // Pass the length of the list
             // Pass the length of the list
           ),
         ),
@@ -131,13 +139,28 @@ class _ContentSection extends StatelessWidget {
         SizedBox(
           height: context.dynamicHeight(0.3),
           child: _CardListPosterBuilder(
-            getImagePath: (index) => _trendMovieListViewModel.tvShowList[index].poster_path!, // Add this line ,
-            mediaType: _trendMovieListViewModel.tvShowList[index].media_type!, // Add this line
-            count: _trendMovieListViewModel.tvShowList.length, // Pass the length of the list
+            getImagePath: (index) => _viewModel.tvShowList[index].poster_path!, // Add this line ,
+            mediaType: _viewModel.tvShowList[index].media_type!, // Add this line
+            count: _viewModel.tvShowList.length, // Pass the length of the list
             // Provide a unique key for tvShowList
           ),
         ),
       ],
+    );
+  }
+}
+
+class _TrendMovieListTitle extends StatelessWidget {
+  const _TrendMovieListTitle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'Trends',
+      style: context.textTheme.headlineSmall?.copyWith(
+        color: ColorConstants.white,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
@@ -263,8 +286,8 @@ class _CenteredCardWithOverlayButtons extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return DetailScreen(
-                    movieID: _trendMovieListViewModel.trendMovieList[1].id!.toString(),
-                    moviesModel: _trendMovieListViewModel.trendMovieList[1],
+                    movieID: _viewModel.trendMovieList[1].id!.toString(),
+                    moviesModel: _viewModel.trendMovieList[1],
                   );
                 },
               ));
@@ -290,7 +313,7 @@ class _RoundedImageCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Image.network(
-          ImageConstants.imagePath + _trendMovieListViewModel.trendMovieList[1].poster_path!,
+          ImageConstants.imagePath + _viewModel.trendMovieList[1].poster_path!,
           fit: BoxFit.fitHeight,
         ),
       ),
@@ -455,12 +478,12 @@ class _CardListPosterState extends State<_CardListPoster> with TickerProviderSta
                           ),
                           child: widget.mediaType == 'movie'
                               ? DetailScreen(
-                                  movieID: _trendMovieListViewModel.trendMovieList[widget.index].id!.toString(),
-                                  moviesModel: _trendMovieListViewModel.trendMovieList[widget.index],
+                                  movieID: _viewModel.trendMovieList[widget.index].id!.toString(),
+                                  moviesModel: _viewModel.trendMovieList[widget.index],
                                 )
                               : DetailScreen(
-                                  movieID: _trendMovieListViewModel.tvShowList[widget.index].id!.toString(),
-                                  moviesModel: _trendMovieListViewModel.tvShowList[widget.index],
+                                  movieID: _viewModel.tvShowList[widget.index].id!.toString(),
+                                  moviesModel: _viewModel.tvShowList[widget.index],
                                 ),
                         ),
                       ),
@@ -501,7 +524,7 @@ class _MyPlayButton extends StatelessWidget {
         shadowColor: ColorConstants.transparant,
       ),
       onPressed: () {
-        _trendMovieListViewModel.trendMovieList.length;
+        _viewModel.trendMovieList.length;
       },
       child: Row(
         children: [
