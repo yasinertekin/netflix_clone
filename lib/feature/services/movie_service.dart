@@ -52,7 +52,7 @@ extension ServicePathExtension on ServicePath {
   }
 }
 
-String apiKey = 'YOUR API KEY';
+String apiKey = 'api_key=d69de2929c68223e081ac45b971fe3ca';
 
 mixin Fetcher on IMoviesService {
   Future<List<MoviesModel>> fetch(String path) async {
