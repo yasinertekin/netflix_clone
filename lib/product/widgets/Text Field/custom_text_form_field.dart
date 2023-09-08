@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
@@ -34,32 +33,30 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (context) => TextFormField(
-        controller: titleController,
-        onChanged: (value) {
-          widget.viewModel.newUsername = value;
-        },
-        style: context.general.textTheme.bodyLarge!.copyWith(
-          color: Colors.white,
+    return TextFormField(
+      controller: titleController,
+      onChanged: (value) {
+        widget.viewModel.selectedUsername = value;
+      },
+      style: context.general.textTheme.bodyLarge!.copyWith(
+        color: Colors.white,
+      ),
+      decoration: InputDecoration(
+        hintText: 'Profile Name',
+        hintStyle: context.general.textTheme.bodyLarge!.copyWith(
+          color: Colors.grey,
         ),
-        decoration: InputDecoration(
-          hintText: 'Profile Name',
-          hintStyle: context.general.textTheme.bodyLarge!.copyWith(
-            color: Colors.grey,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.transparent),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
       ),
     );

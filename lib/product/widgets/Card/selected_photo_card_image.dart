@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 
 class SelectedPhotoCardImage extends StatelessWidget {
   const SelectedPhotoCardImage({
@@ -18,8 +18,8 @@ class SelectedPhotoCardImage extends StatelessWidget {
 
     if (photoURL != null) {
       imageUrl = photoURL!;
-    } else if (viewModel.newPhotoURL.isNotEmpty) {
-      imageUrl = viewModel.newPhotoURL;
+    } else if (viewModel.selectedPhotoURL.isNotEmpty) {
+      imageUrl = viewModel.selectedPhotoURL;
     } else {
       imageUrl = 'https://picsum.photos/200';
     }
