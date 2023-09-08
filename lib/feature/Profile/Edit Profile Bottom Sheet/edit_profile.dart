@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:netflix_clone/feature/Profile/Edit%20Profile%20Bottom%20Sheet/edit_profile_mixin.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/feature/TabBar/tab_bar_screen.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';

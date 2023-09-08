@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Profile/Avatar%20Select%20Bottom%20Sheet/avatar_select.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_screen.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
+import 'package:netflix_clone/feature/Profile/Profile%20List/profile_list.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/constants/color_constants.dart';
 import 'package:netflix_clone/product/constants/decoration_constants.dart';
-import 'package:netflix_clone/product/constants/int_constants.dart';
+import 'package:netflix_clone/product/constants/double_constants.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/models/ProfileBottomSheetModel/profile_bottom_sheet_model.dart';
 import 'package:netflix_clone/product/widgets/Text%20Button/cancel_text_button.dart';
@@ -24,7 +24,7 @@ class EditBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.general.mediaQuery.size.height * IntConstants.defaultBottomSheetHeight,
+      height: context.general.mediaQuery.size.height * DoubleConstants.defaultBottomSheetHeight,
       decoration: const BoxDecoration(
         color: ColorConstants.potBlack,
         borderRadius: BorderRadius.only(
@@ -33,7 +33,9 @@ class EditBottomSheet extends StatelessWidget {
         ),
       ),
       child: SingleChildScrollView(
-        child: _EditProfileBottomSheetBody(viewModel: viewModel, index: index),
+        child: Observer(builder: (_) {
+          return _EditProfileBottomSheetBody(viewModel: viewModel, index: index);
+        }),
       ),
     );
   }
@@ -56,11 +58,12 @@ class _EditProfileBottomSheetBody extends StatelessWidget {
         Observer(builder: (_) {
           return SelectAvatarCards(
             viewModel: viewModel,
-            photoURL: viewModel.newPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.newPhotoURL,
+            photoURL:
+                viewModel.selectedPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.selectedPhotoURL,
           );
         }),
         SizedBox(
-          width: context.general.mediaQuery.size.width * IntConstants.defaultBottomSheetHeight,
+          width: context.general.mediaQuery.size.width * DoubleConstants.defaultBottomSheetHeight,
           child: Observer(builder: (_) {
             return CustomTextFormField(
                 viewModel: viewModel,
@@ -79,7 +82,7 @@ class _EditProfileBottomSheetListModel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.general.mediaQuery.size.height * IntConstants.defaultBottomSheetHeight,
+      height: context.general.mediaQuery.size.height * DoubleConstants.defaultBottomSheetHeight,
       child: ListView.builder(
           itemCount: ProfileBottomSheetModels.ProfileBottomSheetItems.length,
           itemBuilder: (context, index) {
@@ -168,17 +171,17 @@ class _CustomDoneButton extends StatelessWidget {
     return TextButton(
         onPressed: () {
           _checkUsernameAndPhoto();
-          viewModel.updateProfile(index, viewModel.newUsername,
-              viewModel.newPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.newPhotoURL);
+          viewModel.updateProfile(index, viewModel.selectedUsername,
+              viewModel.selectedPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.selectedPhotoURL);
           Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateSelectProfileScreen()));
         },
         child: const Text(StringConstans.done));
   }
 
   void _checkUsernameAndPhoto() {
-    if (viewModel.newUsername.isEmpty && viewModel.newPhotoURL.isEmpty) {
-      viewModel.newUsername = viewModel.profiles[index]['username'] ?? '';
-      viewModel.newPhotoURL = viewModel.profiles[index]['photoURL'] ?? '';
+    if (viewModel.selectedUsername.isEmpty && viewModel.selectedPhotoURL.isEmpty) {
+      viewModel.selectedUsername = viewModel.profiles[index]['username'] ?? '';
+      viewModel.selectedPhotoURL = viewModel.profiles[index]['photoURL'] ?? '';
     }
   }
 }

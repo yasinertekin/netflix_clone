@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
-import 'package:netflix_clone/product/constants/int_constants.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
+import 'package:netflix_clone/product/constants/double_constants.dart';
 import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 
 class AvatarSelectBottomSheet extends StatelessWidget {
@@ -11,7 +11,7 @@ class AvatarSelectBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.general.mediaQuery.size.height * IntConstants.defaultBottomSheetHeight,
+      height: context.general.mediaQuery.size.height * DoubleConstants.defaultBottomSheetHeight,
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.only(
@@ -101,7 +101,7 @@ class _AvatarHorizantalList extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: () {
-              viewModel.newPhotoURL = photos[photoIndex];
+              viewModel.selectedPhotoURL = photos[photoIndex];
               Navigator.pop(context);
             },
             child: AvatarCard(photos: photos, photoIndex: photoIndex),
