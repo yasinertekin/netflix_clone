@@ -72,11 +72,7 @@ class DetailScreen extends StatelessWidget {
                     mute: true,
                   ),
                 );
-
-                // Burada Youtube player'ı başlatmak veya kullanmak için gerekli kodları devam ettirin.
               }
-
-              // YoutubePlayerController nesnesini FutureBuilder widget'ının içinde oluşturun
 
               return SingleChildScrollView(
                 child: Padding(
