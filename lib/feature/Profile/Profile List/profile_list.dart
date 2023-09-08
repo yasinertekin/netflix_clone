@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Profile/Edit%20Profile/edit_profile.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_view_model.dart';
+import 'package:netflix_clone/feature/Profile/Edit%20Profile%20Bottom%20Sheet/edit_profile.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
+import 'package:netflix_clone/product/widgets/NetflixProgressIndicator/netflix_progress_indicator.dart';
 import 'package:netflix_clone/product/widgets/Text%20Button/edit_text_button.dart';
 
-import '../Add Profile/add_profile.dart';
+import '../Add Profile Bottom Sheet/add_profile.dart';
 
 class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager {
   const CreateSelectProfileScreen({super.key});
@@ -15,24 +16,22 @@ class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager 
   Widget build(BuildContext context) {
     final viewModel = CreateSelectProfileViewModel();
 
-    return Observer(builder: (_) {
-      return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: _ProfileListAppBar(viewModel: viewModel),
-        ),
-        backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: Center(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: context.dynamicWidth(1),
-              child: Observer(builder: (_) => _buildProfileContent(context, viewModel)),
-            ),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: _ProfileListAppBar(viewModel: viewModel),
+      ),
+      backgroundColor: Colors.black,
+      body: SingleChildScrollView(
+        child: Center(
+          child: SizedBox(
+            height: context.general.mediaQuery.size.height,
+            width: context.general.mediaQuery.size.width,
+            child: Observer(builder: (_) => _buildProfileContent(context, viewModel)),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
   Column _buildProfileContent(BuildContext context, CreateSelectProfileViewModel viewModel) {
@@ -57,7 +56,12 @@ class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager 
       future: viewModel.getProfiles(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const NetflixProgressIndicator(
+            strokeWidth: 6.0, // İlerleme çizgisinin kalınlığı
+            radius: 25.0, // İlerleme çizgisinin yarı çapı
+            backgroundColor: Colors.grey, // Arkaplan rengi
+            progressColor: Colors.red, // İlerleme rengi
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -94,7 +98,9 @@ class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager 
       // Son eleman "Add" düğmesi
       return Padding(
         padding: const EdgeInsets.all(8.0),
-        child: viewModel.profiles.length < 5 ? AddProfiles(viewModel: viewModel) : const SizedBox.shrink(),
+        child: viewModel.profiles.length < 5 && viewModel.isEdit
+            ? const SizedBox.shrink()
+            : AddProfiles(viewModel: viewModel),
       );
     } else {
       return Padding(
@@ -110,7 +116,7 @@ class CreateSelectProfileScreen extends StatelessWidget with MyNavigatorManager 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Observer(builder: (_) {
-          return ProfileAvatarTile(isEditing: viewModel.isEditing, viewModel: viewModel, index: index);
+          return ProfileAvatarTile(isEditing: viewModel.isEdit, viewModel: viewModel, index: index);
         }),
         _profileUsername(viewModel, index),
       ],
@@ -137,7 +143,11 @@ class _ProfileListAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: const Text('Who is Watcing?'),
-      actions: [EditTextButton(viewModel: viewModel)],
+      actions: [
+        Observer(builder: (_) {
+          return EditTextButton(viewModel: viewModel);
+        }),
+      ],
       backgroundColor: Colors.transparent,
       elevation: 0,
     );

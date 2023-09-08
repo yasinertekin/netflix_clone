@@ -1,2 +1,2 @@
-export 'create_select_profile_screen.dart';
-export 'create_select_profile_view_model.dart';
+export 'profile_list.dart';
+export '../View Model/profile_view_model.dart';
