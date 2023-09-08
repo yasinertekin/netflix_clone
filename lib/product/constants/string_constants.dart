@@ -13,4 +13,7 @@ class StringConstans {
   static const String editProfile = 'Edit Profile';
   static const String profileUsername = "Profile Username";
   static const String randomImageURL = 'https://picsum.photos/200';
+  static const String addProfile = 'Add Profile';
+  static const String save = 'Save';
+  static const String netflix = 'Netflix';
 }
