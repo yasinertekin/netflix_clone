@@ -1,36 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Profile/Add%20Profile%20Bottom%20Sheet/add_profile_mixin.dart';
-import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/constants/decoration_constants.dart';
 import 'package:netflix_clone/product/constants/index.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
 
 class AddProfiles extends StatelessWidget {
-  const AddProfiles({super.key, required this.viewModel});
-
-  final CreateSelectProfileViewModel viewModel;
+  const AddProfiles({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return SizedBox(
-        child: AddProfile(
-          viewModel: viewModel,
-        ),
-      );
-    });
+    return const SizedBox(
+      child: AddProfile(),
+    );
   }
 }
 
 class AddProfile extends StatefulWidget with MyNavigatorManager {
   const AddProfile({
     super.key,
-    required this.viewModel,
   });
-
-  final CreateSelectProfileViewModel viewModel;
 
   @override
   State<AddProfile> createState() => _AddProfileState();
@@ -69,6 +60,7 @@ class _AddProfileState extends State<AddProfile> with AddProfileMixin {
   }
 
   Column _addProfileBody(BuildContext context) {
+    const double iconSize = 50;
     return Column(
       children: [
         SizedBox(
@@ -77,7 +69,7 @@ class _AddProfileState extends State<AddProfile> with AddProfileMixin {
             child: const Icon(
               Icons.add,
               color: Colors.white,
-              size: 50,
+              size: iconSize,
             )),
       ],
     );

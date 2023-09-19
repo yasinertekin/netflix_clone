@@ -43,40 +43,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'YOUR API KEY',
-    appId: 'YOUR APP ID',
-    messagingSenderId: 'YOUR MESSAGING SENDER ID',
-    projectId: 'YOUR PROJECT ID',
-    authDomain: 'YOUR AUTH DOMAIN',
-    storageBucket: 'YOUR STORAGE BUCKET',
-    measurementId: 'YOUR MEASUREMENT ID',
-  );
+      apiKey: 'AIzaSyBElqNMqzBG7hIrDctt81R8MQEimxnUw54',
+      appId: '1:844729573669:web:49f9e2291851489892bacc',
+      messagingSenderId: '844729573669',
+      projectId: 'netflixclone-4510d',
+      authDomain: 'netflixclone-4510d.firebaseapp.com',
+      storageBucket: 'netflixclone-4510d.appspot.com',
+      measurementId: 'G-QH3R4BEK3V');
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR API KEY',
-    appId: 'YOUR APP ID',
-    messagingSenderId: 'YOUR MESSAGING SENDER ID',
-    projectId: 'YOUR PROJECT ID',
-    storageBucket: 'YOUR STORAGE BUCKET',
+    apiKey: 'AIzaSyAAer5u1e-J_QXRtg26JQrZkpIR2sI3f5Y',
+    appId: '1:844729573669:android:a53cd83e8fb983de92bacc',
+    messagingSenderId: '844729573669',
+    projectId: 'netflixclone-4510d',
+    storageBucket: 'netflixclone-4510d.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR API KEY',
-    appId: 'YOUR APP ID',
-    messagingSenderId: 'YOUR MESSAGING SENDER ID',
-    projectId: 'YOUR PROJECT ID',
-    storageBucket: 'YOUR STORAGE BUCKET',
-    iosClientId: 'YOUR IOS CLIENT ID',
-    iosBundleId: 'YOUR IOS BUNDLE ID',
+    apiKey: 'AIzaSyA5tLS902QDypdT3CqdKjlz-xFTwPXz9nY',
+    appId: '1:844729573669:ios:2c5d7f7993c3b1b192bacc',
+    messagingSenderId: '844729573669',
+    projectId: 'netflixclone-4510d',
+    storageBucket: 'netflixclone-4510d.appspot.com',
+    iosClientId: '844729573669-m67jfhoehgia0bdn4rj0qbfqumer2r31.apps.googleusercontent.com',
+    iosBundleId: 'com.example.netflixClone',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'YOUR API KEY',
-    appId: 'YOUR APP ID',
-    messagingSenderId: 'YOUR MESSAGING SENDER ID',
-    projectId: 'YOUR PROJECT ID',
-    storageBucket: 'YOUR STORAGE BUCKET',
-    iosClientId: 'YOUR IOS CLIENT ID',
-    iosBundleId: 'YOUR IOS BUNDLE ID',
+    apiKey: 'AIzaSyA5tLS902QDypdT3CqdKjlz-xFTwPXz9nY',
+    appId: '1:844729573669:ios:0063c1467912d6bc92bacc',
+    messagingSenderId: '844729573669',
+    projectId: 'netflixclone-4510d',
+    storageBucket: 'netflixclone-4510d.appspot.com',
+    iosClientId: '844729573669-ud7efh7slef1j235eg8sg0f24s332b77.apps.googleusercontent.com',
+    iosBundleId: 'com.example.netflixClone.RunnerTests',
   );
 }

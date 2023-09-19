@@ -8,7 +8,9 @@ import 'package:netflix_clone/product/constants/color_constants.dart';
 import 'package:netflix_clone/product/constants/decoration_constants.dart';
 import 'package:netflix_clone/product/constants/double_constants.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
+import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
 import 'package:netflix_clone/product/models/ProfileBottomSheetModel/profile_bottom_sheet_model.dart';
+import 'package:netflix_clone/product/models/ProfileModel/profile_model.dart';
 import 'package:netflix_clone/product/widgets/Text%20Button/cancel_text_button.dart';
 import 'package:netflix_clone/product/widgets/Text%20Field/custom_text_form_field.dart';
 
@@ -33,9 +35,10 @@ class EditBottomSheet extends StatelessWidget {
         ),
       ),
       child: SingleChildScrollView(
-        child: Observer(builder: (_) {
-          return _EditProfileBottomSheetBody(viewModel: viewModel, index: index);
-        }),
+        child: _EditProfileBottomSheetBody(
+          viewModel: viewModel,
+          index: index,
+        ),
       ),
     );
   }
@@ -55,20 +58,21 @@ class _EditProfileBottomSheetBody extends StatelessWidget {
     return Column(
       children: [
         _EditProfileBottomSheetHeader(viewModel: viewModel, index: index),
-        Observer(builder: (_) {
-          return SelectAvatarCards(
-            viewModel: viewModel,
-            photoURL:
-                viewModel.selectedPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.selectedPhotoURL,
-          );
-        }),
+        Observer(
+          builder: (_) {
+            // avatar seçtiktne sonra dönerken burası güncelliyor
+            return SelectAvatarCards(
+              viewModel: viewModel,
+              photoURL: viewModel.selectedPhotoURL.isEmpty
+                  ? viewModel.profiles[index]['photoURL']
+                  : viewModel.selectedPhotoURL,
+            );
+          },
+        ),
         SizedBox(
           width: context.general.mediaQuery.size.width * DoubleConstants.defaultBottomSheetHeight,
-          child: Observer(builder: (_) {
-            return CustomTextFormField(
-                viewModel: viewModel,
-                titleText: viewModel.profiles[index]['username'] ?? StringConstans.profileUsername);
-          }),
+          child: CustomTextFormField(
+              viewModel: viewModel, titleText: viewModel.profiles[index]['username'] ?? StringConstans.profileUsername),
         ),
         const _EditProfileBottomSheetListModel()
       ],
@@ -149,15 +153,13 @@ class _EditProfileBottomSheetHeader extends StatelessWidget {
       children: [
         const CancelTextButton(),
         const Text(StringConstans.editProfile),
-        Observer(builder: (_) {
-          return _CustomDoneButton(viewModel: viewModel, index: index);
-        }),
+        _CustomDoneButton(viewModel: viewModel, index: index),
       ],
     );
   }
 }
 
-class _CustomDoneButton extends StatelessWidget {
+class _CustomDoneButton extends StatelessWidget with MyNavigatorManager {
   const _CustomDoneButton({
     required this.viewModel,
     required this.index,
@@ -169,11 +171,18 @@ class _CustomDoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () {
+        onPressed: () async {
           _checkUsernameAndPhoto();
-          viewModel.updateProfile(index, viewModel.selectedUsername,
-              viewModel.selectedPhotoURL.isEmpty ? viewModel.profiles[index]['photoURL'] : viewModel.selectedPhotoURL);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateSelectProfileScreen()));
+          viewModel.updateProfile(
+            index,
+            ProfileModel(
+              username: viewModel.selectedUsername,
+              photoURL: viewModel.selectedPhotoURL,
+            ),
+          );
+          await viewModel.getProfiles();
+
+          navigatoToWidget(context, const ProfileListScreen());
         },
         child: const Text(StringConstans.done));
   }
@@ -181,6 +190,10 @@ class _CustomDoneButton extends StatelessWidget {
   void _checkUsernameAndPhoto() {
     if (viewModel.selectedUsername.isEmpty && viewModel.selectedPhotoURL.isEmpty) {
       viewModel.selectedUsername = viewModel.profiles[index]['username'] ?? '';
+      viewModel.selectedPhotoURL = viewModel.profiles[index]['photoURL'] ?? '';
+    } else if (viewModel.selectedUsername.isEmpty) {
+      viewModel.selectedUsername = viewModel.profiles[index]['username'] ?? '';
+    } else if (viewModel.selectedPhotoURL.isEmpty) {
       viewModel.selectedPhotoURL = viewModel.profiles[index]['photoURL'] ?? '';
     }
   }

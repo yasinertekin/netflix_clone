@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/constants/double_constants.dart';
@@ -10,20 +11,24 @@ class AvatarSelectBottomSheet extends StatelessWidget {
   final AsyncSnapshot<List<Map<String, dynamic>>> snapshot;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.general.mediaQuery.size.height * DoubleConstants.defaultBottomSheetHeight,
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+    return Observer(builder: (_) {
+      return Container(
+        height: context.general.mediaQuery.size.height * DoubleConstants.defaultBottomSheetHeight,
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
-      ),
-      child: _AvatarList(
-        viewModel: viewModel,
-        snapshot: snapshot,
-      ),
-    );
+        child: Observer(builder: (_) {
+          return _AvatarList(
+            viewModel: viewModel,
+            snapshot: snapshot,
+          );
+        }),
+      );
+    });
   }
 }
 
@@ -98,7 +103,7 @@ class _AvatarHorizantalList extends StatelessWidget {
       itemCount: photos.length,
       itemBuilder: (context, photoIndex) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: context.padding.low,
           child: InkWell(
             onTap: () {
               viewModel.selectedPhotoURL = photos[photoIndex];
@@ -129,7 +134,7 @@ class AvatarAndNameListTile extends StatelessWidget {
     return ListTile(
       title: _CharactarName(name: name),
       subtitle: SizedBox(
-        height: context.dynamicHeight(0.20),
+        height: context.general.mediaQuery.size.height * DoubleConstants.defaultAvatarCardHeight,
         child: _AvatarHorizantalList(photos: photos, viewModel: viewModel),
       ),
     );

@@ -10,7 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   });
 
   final String? titleText;
-  final CreateSelectProfileViewModel viewModel;
+  final CreateSelectProfileViewModel? viewModel;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -36,7 +36,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return TextFormField(
       controller: titleController,
       onChanged: (value) {
-        widget.viewModel.selectedUsername = value;
+        widget.viewModel?.selectedUsername = value;
       },
       style: context.general.textTheme.bodyLarge!.copyWith(
         color: Colors.white,

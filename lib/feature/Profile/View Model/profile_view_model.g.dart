@@ -92,14 +92,29 @@ mixin _$CreateSelectProfileViewModel
     });
   }
 
+  late final _$favoriteAtom = Atom(
+      name: '_CreateSelectProfileViewModelBase.favorite', context: context);
+
+  @override
+  List<MoviesModel> get favorite {
+    _$favoriteAtom.reportRead();
+    return super.favorite;
+  }
+
+  @override
+  set favorite(List<MoviesModel> value) {
+    _$favoriteAtom.reportWrite(value, super.favorite, () {
+      super.favorite = value;
+    });
+  }
+
   late final _$addProfileAsyncAction = AsyncAction(
       '_CreateSelectProfileViewModelBase.addProfile',
       context: context);
 
   @override
-  Future<void> addProfile(String username, String photoURL) {
-    return _$addProfileAsyncAction
-        .run(() => super.addProfile(username, photoURL));
+  Future<void> addProfile(ProfileModel profileModel) {
+    return _$addProfileAsyncAction.run(() => super.addProfile(profileModel));
   }
 
   late final _$removeProfileAsyncAction = AsyncAction(
@@ -135,9 +150,9 @@ mixin _$CreateSelectProfileViewModel
       context: context);
 
   @override
-  Future<void> updateProfile(int index, String username, String? photoURL) {
+  Future<void> updateProfile(int index, ProfileModel profileModel) {
     return _$updateProfileAsyncAction
-        .run(() => super.updateProfile(index, username, photoURL));
+        .run(() => super.updateProfile(index, profileModel));
   }
 
   late final _$getProfileDocumentAsyncAction = AsyncAction(
@@ -150,6 +165,36 @@ mixin _$CreateSelectProfileViewModel
         .run(() => super.getProfileDocument());
   }
 
+  late final _$addFavoriteMovieAsyncAction = AsyncAction(
+      '_CreateSelectProfileViewModelBase.addFavoriteMovie',
+      context: context);
+
+  @override
+  Future<void> addFavoriteMovie(String uid, MoviesModel movieName) {
+    return _$addFavoriteMovieAsyncAction
+        .run(() => super.addFavoriteMovie(uid, movieName));
+  }
+
+  late final _$chechFavoriteMovieAsyncAction = AsyncAction(
+      '_CreateSelectProfileViewModelBase.chechFavoriteMovie',
+      context: context);
+
+  @override
+  Future<void> chechFavoriteMovie(MoviesModel movie) {
+    return _$chechFavoriteMovieAsyncAction
+        .run(() => super.chechFavoriteMovie(movie));
+  }
+
+  late final _$removeFavoriteMovieAsyncAction = AsyncAction(
+      '_CreateSelectProfileViewModelBase.removeFavoriteMovie',
+      context: context);
+
+  @override
+  Future<void> removeFavoriteMovie(String uid, MoviesModel movieName) {
+    return _$removeFavoriteMovieAsyncAction
+        .run(() => super.removeFavoriteMovie(uid, movieName));
+  }
+
   @override
   String toString() {
     return '''
@@ -157,7 +202,8 @@ isLoading: ${isLoading},
 isEdit: ${isEdit},
 selectedPhotoURL: ${selectedPhotoURL},
 selectedUsername: ${selectedUsername},
-profiles: ${profiles}
+profiles: ${profiles},
+favorite: ${favorite}
     ''';
   }
 }

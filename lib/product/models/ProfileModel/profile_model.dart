@@ -1,45 +1,33 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:netflix_clone/product/utility/base/base_firebase_model.dart';
+import 'package:netflix_clone/product/models/MoviesModel/movies_model.dart';
+import 'package:uuid/uuid.dart';
 
-part 'profile_model.g.dart';
-
-@JsonSerializable()
-class ProfileModel extends Equatable with IdModel, BaseFireBaseModel<ProfileModel> {
-  final String? username;
-  final String? photoUrl;
+class ProfileModel {
+  final String id;
+  final String username;
+  final String photoURL;
+  List<MoviesModel>? favorite;
 
   ProfileModel({
-    this.username,
-    this.photoUrl,
-  });
+    String? id,
+    required this.username,
+    required this.photoURL,
+    this.favorite,
+  }) : id = id ?? const Uuid().v4();
 
-  @override
-  List<Object?> get props => [username, photoUrl];
+  Map<String, dynamic> toMap() {
+    return {'username': username, 'photoURL': photoURL, 'favorite': favorite, 'id': id};
+  }
 
-  ProfileModel copyWith({
-    String? username,
-    String? photoUrl,
-  }) {
+  factory ProfileModel.fromMap(Map<String, dynamic> map) {
     return ProfileModel(
-      username: username ?? this.username,
-      photoUrl: photoUrl ?? this.photoUrl,
+      username: map['username'],
+      photoURL: map['photoURL'],
+      favorite: List<MoviesModel>.from(
+        map['favorite']?.map(
+          (x) => MoviesModel.fromJson(x),
+        ),
+      ),
+      id: map['id'],
     );
   }
-
-  factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    return _$ProfileModelFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() => _$ProfileModelToJson(this);
-
-  @override
-  ProfileModel fromJson(Map<String, dynamic> json) {
-    return ProfileModel.fromJson(json);
-    // TODO: implement fromJson
-  }
-
-  @override
-  // TODO: implement id
-  String? get id => throw UnimplementedError();
 }

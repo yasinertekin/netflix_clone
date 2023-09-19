@@ -14,4 +14,7 @@ class ColorConstants {
   static const Color potBlack = Color(0xff161616);
   static const Color blue = Color(0xff0071eb);
   static const Color registrationBlack = Color(0xff5e757d);
+  static const Color tennisBall = Color(0xff5e757d);
+  static const Color winterHorror = Color(0xff5e757d);
+  static const Color green = Color(0xff5e757d);
 }

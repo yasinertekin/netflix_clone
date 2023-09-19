@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:netflix_clone/product/models/MoviesModel/movies_model.dart';
+import 'package:netflix_clone/product/models/ProfileModel/profile_model.dart';
 
 abstract class ProfileServiceBase {
   Future<DocumentReference<Map<String, dynamic>>> getProfileDocument();
   Future<List<Map<String, dynamic>>> getProfiles();
-  Future<void> addProfile(String username, String photoURL);
+  Future<void> addProfile(ProfileModel profileModel);
   Future<void> removeProfile(int index);
   Future<List<Map<String, dynamic>>> getCharacterDataList();
-  Future<void> updateProfile(int index, String username, String? photoURL);
+  Future<void> updateProfile(int index, ProfileModel profileModel);
+  Future<void> addFavoriteMovie(String uid, MoviesModel movieName);
+  Future<void> removeFavoriteMovie(String uid, MoviesModel movieName);
 }
 
 class FirebaseProfileService extends ProfileServiceBase {
@@ -33,12 +37,13 @@ class FirebaseProfileService extends ProfileServiceBase {
   }
 
   @override
-  Future<void> addProfile(String username, String photoURL) async {
+  Future<void> addProfile(ProfileModel profileModel) async {
     final profileDoc = await getProfileDocument();
     final profiles = await getProfiles();
+
     profiles.add({
-      'username': username,
-      'photoURL': photoURL,
+      'username': profileModel.username,
+      'photoURL': profileModel.photoURL,
     });
     await profileDoc.set({
       'profiles': profiles,
@@ -54,9 +59,7 @@ class FirebaseProfileService extends ProfileServiceBase {
       await profileDoc.set({
         'profiles': profiles,
       });
-    } else {
-      print('Geçersiz indeks');
-    }
+    } else {}
   }
 
   @override
@@ -81,30 +84,103 @@ class FirebaseProfileService extends ProfileServiceBase {
       // Karakter verilerini kullanmak için characterList'i döndürebilirsiniz
       return characterList;
     } catch (e) {
-      print('Error: $e');
       rethrow;
     }
   }
 
   @override
-  Future<void> updateProfile(int index, String username, String? photoURL) async {
+  Future<void> updateProfile(int index, ProfileModel profileModel) async {
     try {
       final profiles = await getProfiles();
       if (index >= 0 && index < profiles.length) {
         profiles[index] = {
-          'username': username,
-          'photoURL': photoURL,
+          'username': profileModel.username,
+          'photoURL': profileModel.photoURL,
         };
         final profileDoc = await getProfileDocument();
         await profileDoc.set({
           'profiles': profiles,
         });
       } else {
-        print('Geçersiz indeks');
+        Exception();
       }
     } catch (e) {
-      print('Error: $e');
       rethrow;
     }
   }
+
+  @override
+  Future<void> addFavoriteMovie(String uid, MoviesModel movie) async {
+    try {
+      final userProfileRef = FirebaseFirestore.instance.collection('profiles').doc(uid);
+      await getProfiles();
+      final userData = await userProfileRef.get();
+
+      if (userData.exists) {
+        await userProfileRef.update({
+          'favoriteMovies': FieldValue.arrayUnion([movie.toMap()]),
+        });
+      } else {
+        Exception();
+      }
+    } catch (e) {
+      Exception();
+    }
+  }
+
+  @override
+  Future<void> removeFavoriteMovie(String uid, MoviesModel movie) async {
+    try {
+      final userProfileRef = FirebaseFirestore.instance.collection('profiles').doc(uid);
+      await getProfiles();
+      final userData = await userProfileRef.get();
+
+      if (userData.exists) {
+        await userProfileRef.update({
+          'favoriteMovies': FieldValue.arrayRemove([movie.toMap()]),
+        });
+      } else {
+        Exception();
+      }
+    } catch (e) {
+      Exception();
+    }
+  }
 }
+
+
+
+/*  @override
+  Future<void> addFavoriteMovie(String uid, MoviesModel movie) async {
+    try {
+      final userProfileRef = FirebaseFirestore.instance.collection('profiles').doc(uid);
+      final userData = await userProfileRef.get();
+
+      if (userData.exists) {
+        final Map<String, dynamic> userDataMap = userData.data() as Map<String, dynamic>;
+        List<dynamic> profiles = userDataMap['profiles'] ?? [];
+
+        // "profiles" içindeki her "profile" nesnesinin "favorite" alanını güncelleyin
+        final updatedProfiles = profiles.map((profile) {
+          if (profile['favorite'] == null) {
+            // Eğer "favorite" alanı henüz tanımlanmamışsa, yeni bir liste oluşturun
+            profile['favorite'] = [movie.toMap()];
+          } else {
+            // "favorite" alanı zaten varsa, mevcut listeye yeni filmi ekleyin
+            List<dynamic> favoriteMovies = profile['favorite'];
+            favoriteMovies.add(movie.toMap());
+            profile['favorite'] = favoriteMovies;
+          }
+          return profile;
+        }).toList();
+
+        await userProfileRef.update({
+          'profiles': updatedProfiles,
+        });
+      } else {
+        print('Kullanıcı belgesi bulunamadı.');
+      }
+    } catch (e) {
+      print("Favori film ekleme hatası: $e");
+    }
+  }*/

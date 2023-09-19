@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:netflix_clone/feature/Detail/detail_screen.dart';
 import 'package:netflix_clone/feature/Profile/Edit%20Profile%20Bottom%20Sheet/edit_profile_mixin.dart';
-import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/feature/TabBar/tab_bar_screen.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
+import 'package:netflix_clone/product/models/ProfileModel/profile_model.dart';
 import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 
 class ProfileAvatarTile extends StatefulWidget {
   final bool isEditing;
   final int index;
-  final CreateSelectProfileViewModel viewModel;
+  final ProfileModel? profileModel;
 
   const ProfileAvatarTile({
     super.key,
     required this.isEditing,
-    required this.viewModel,
     required this.index,
+    required this.profileModel,
   });
 
   @override
@@ -32,22 +33,20 @@ class _ProfileAvatarTileState extends State<ProfileAvatarTile> with EditProfileM
             ? showEditProfileSheet(
                 context,
                 widget.index,
-                widget.viewModel,
+                viewModel,
               )
             : navigatoToWidget(
                 context,
                 TabBarScreen(
-                  profileImage: widget.viewModel.profiles[widget.index]['photoURL'] ?? StringConstans.randomImageURL,
-                  profileName: widget.viewModel.profiles[widget.index]['username'] ?? '',
+                  profileModel: widget.profileModel,
+                  profileViewModel: viewModel,
+                  profileImage: viewModel.profiles[widget.index]['photoURL'] ?? StringConstans.randomImageURL,
+                  profileName: viewModel.profiles[widget.index]['username'] ?? '',
                 ),
               );
       },
-      child: Observer(
-        builder: (_) {
-          return _CustomStack(
-            widget: widget,
-          );
-        },
+      child: _CustomStack(
+        widget: widget,
       ),
     );
   }
@@ -65,10 +64,13 @@ class _CustomStack extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        AvatarCard(
-          isEditing: widget.isEditing,
-          photoURL: widget.viewModel.profiles[widget.index]['photoURL'] ?? StringConstans.randomImageURL,
-        ),
+        Observer(builder: (_) {
+          //Avatarın güncellenmesi için burayı da sarmalamamız lazım
+          return AvatarCard(
+            isEditing: widget.isEditing,
+            photoURL: viewModel.profiles[widget.index]['photoURL'] ?? StringConstans.randomImageURL,
+          );
+        }),
         widget.isEditing
             ? const Icon(
                 Icons.edit,

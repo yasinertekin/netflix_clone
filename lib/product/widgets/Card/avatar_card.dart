@@ -31,9 +31,7 @@ class AvatarCard extends StatelessWidget {
     return Card(
       color: context.randomColor,
       elevation: 10,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: ColorFiltered(

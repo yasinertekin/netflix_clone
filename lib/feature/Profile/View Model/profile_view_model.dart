@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mobx/mobx.dart';
+import 'package:netflix_clone/feature/Home/HomeView/home_view.dart';
 import 'package:netflix_clone/feature/services/firebase_service.dart';
+import 'package:netflix_clone/product/models/MoviesModel/movies_model.dart';
+import 'package:netflix_clone/product/models/ProfileModel/profile_model.dart';
 
 part 'profile_view_model.g.dart';
 
@@ -24,9 +27,14 @@ abstract class _CreateSelectProfileViewModelBase with Store {
   @observable
   List<Map<String, dynamic>> profiles = [];
 
+  @observable
+  List<MoviesModel> favorite = [];
+
   @action
-  Future<void> addProfile(String username, String photoURL) async {
-    await _profileService.addProfile(username, photoURL);
+  Future<void> addProfile(ProfileModel profileModel) async {
+    await _profileService.addProfile(
+      profileModel,
+    );
   }
 
   @action
@@ -45,8 +53,8 @@ abstract class _CreateSelectProfileViewModelBase with Store {
   }
 
   @action
-  Future<void> updateProfile(int index, String username, String? photoURL) async {
-    await _profileService.updateProfile(index, username, photoURL);
+  Future<void> updateProfile(int index, ProfileModel profileModel) async {
+    await _profileService.updateProfile(index, profileModel);
   }
 
   @action
@@ -56,5 +64,34 @@ abstract class _CreateSelectProfileViewModelBase with Store {
 
   void setIsEditing() {
     isEdit = !isEdit;
+  }
+
+  @action
+  Future<void> addFavoriteMovie(String uid, MoviesModel movieName) async {
+    await _profileService.addFavoriteMovie(
+      uid,
+      movieName,
+    );
+    homeViewModel.setIsFavorite();
+  }
+
+  @action
+  Future<void> chechFavoriteMovie(MoviesModel movie) async {
+    // Eğer favori film zaten listede yoksa, ekleyin
+    if (!favorite.contains(movie)) {
+      favorite.add(movie);
+    } else {
+      favorite.remove(movie);
+      removeFavoriteMovie(selectedUsername, movie);
+    }
+  }
+
+  @action
+  Future<void> removeFavoriteMovie(String uid, MoviesModel movieName) async {
+    await _profileService.removeFavoriteMovie(
+      uid,
+      movieName,
+    );
+    homeViewModel.setIsFavorite();
   }
 }

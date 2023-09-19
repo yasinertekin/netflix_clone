@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/feature/Profile/Avatar%20Select%20Bottom%20Sheet/avatar_select_mixin.dart';
 import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
-import 'package:netflix_clone/product/widgets/Card/selected_photo_card_image.dart';
+import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 import 'package:netflix_clone/product/widgets/Icon%20Button/edit_icon_button.dart';
 
 class SelectAvatarCards extends StatelessWidget {
@@ -42,8 +42,7 @@ class _SelectAvatarCardState extends State<SelectAvatarCard> with AvatarSelectMi
       },
       child: Stack(
         children: [
-          SelectedPhotoCardImage(
-            viewModel: widget.viewModel,
+          AvatarCard(
             photoURL: widget.photoURL,
           ),
           const EditIconButton(),

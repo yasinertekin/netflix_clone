@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
-import 'package:netflix_clone/feature/Home/home_view.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20View/profile_view.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:netflix_clone/feature/Home/HomeView/home_view.dart';
+import 'package:netflix_clone/feature/Profile/Profile%20View/my_profile_view.dart';
+import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/constants/color_constants.dart';
+import 'package:netflix_clone/product/constants/decoration_constants.dart';
 import 'package:netflix_clone/product/constants/string_constants.dart';
 import 'package:netflix_clone/product/enums/tab_bar_enums.dart';
+import 'package:netflix_clone/product/models/ProfileModel/profile_model.dart';
 import 'package:netflix_clone/product/widgets/Card/avatar_card.dart';
 
 // ignore: must_be_immutable
 class TabBarScreen extends StatefulWidget {
-  TabBarScreen({super.key, this.profileName, this.profileImage, this.initialTabIndex = 0});
+  TabBarScreen(
+      {super.key,
+      this.profileName,
+      this.profileImage,
+      this.initialTabIndex = 0,
+      required this.profileViewModel,
+      required this.profileModel});
 
   String? profileName;
   String? profileImage;
   final int initialTabIndex;
+  final ProfileModel? profileModel;
+
+  final CreateSelectProfileViewModel profileViewModel;
 
   @override
   State<TabBarScreen> createState() => _TabBarScreenState();
@@ -24,7 +36,11 @@ class _TabBarScreenState extends State<TabBarScreen> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: MyTabviews.values.length, vsync: this, initialIndex: widget.initialTabIndex);
+    _tabController = TabController(
+      length: MyTabviews.values.length,
+      vsync: this,
+      initialIndex: widget.initialTabIndex,
+    );
   }
 
   @override
@@ -34,10 +50,16 @@ class _TabBarScreenState extends State<TabBarScreen> with TickerProviderStateMix
       child: Scaffold(
         extendBody: true,
         bottomNavigationBar: BottomAppBar(
-          color: Colors.black,
+          color: ColorConstants.black,
           child: myTabView(),
         ),
-        body: _TabBarView(tabController: _tabController, profileName: widget.profileName),
+        body: _TabBarView(
+          tabController: _tabController,
+          profileName: widget.profileName,
+          profileViewModel: widget.profileViewModel,
+          profileModel: widget.profileModel,
+          profileImage: widget.profileImage,
+        ),
       ),
     );
   }
@@ -52,35 +74,39 @@ class _TabBarScreenState extends State<TabBarScreen> with TickerProviderStateMix
       //isScrollable: true,
       labelColor: ColorConstants.white,
       unselectedLabelColor: ColorConstants.grey,
-      padding: EdgeInsets.zero,
-      onTap: (value) {
-        //int value
-      },
       controller: _tabController,
-      tabs: MyTabviews.values.map((e) {
+      tabs: MyTabViewsValuesMap().toList(),
+    );
+  }
+
+  Iterable<Tab> MyTabViewsValuesMap() {
+    const double iconSize = 20;
+
+    return MyTabviews.values.map(
+      (e) {
         if (e.name == 'home') {
           return Tab(
             text: e.name,
-            icon: const Icon(Icons.home, size: 20),
+            icon: const Icon(Icons.home, size: iconSize),
           );
         } else if (e.name == 'news') {
           return Tab(
             text: e.name,
-            icon: const Icon(Icons.new_label_sharp, size: 20),
+            icon: const Icon(Icons.new_label_sharp, size: iconSize),
           );
         } else {
           return Tab(
             text: e.name,
             icon: CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.transparent,
+              radius: DecorationConstants.defaultBorderRadius,
+              backgroundColor: ColorConstants.transparant,
               child: AvatarCard(
                 photoURL: widget.profileImage ?? StringConstans.randomImageURL,
               ),
             ),
           );
         }
-      }).toList(),
+      },
     );
   }
 }
@@ -89,10 +115,17 @@ class _TabBarView extends StatelessWidget {
   const _TabBarView({
     required TabController tabController,
     required this.profileName,
+    required this.profileViewModel,
+    required this.profileModel,
+    required this.profileImage,
   }) : _tabController = tabController;
 
   final TabController _tabController;
   final String? profileName;
+  final CreateSelectProfileViewModel profileViewModel;
+
+  final ProfileModel? profileModel;
+  final String? profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +135,18 @@ class _TabBarView extends StatelessWidget {
       children: [
         HomeView(
           profileName: profileName,
+          profileViewModel: profileViewModel,
+          profileModel: profileModel,
         ),
         Container(
           color: Colors.red,
         ),
-        const ProfileView(),
+        Observer(builder: (_) {
+          return MyProfileView(
+            profileName: profileName,
+            profileImage: profileImage,
+          );
+        }),
       ],
     );
   }

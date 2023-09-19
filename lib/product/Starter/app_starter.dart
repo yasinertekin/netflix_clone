@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/feature/OnBoard/onboard_screen.dart';
-import 'package:netflix_clone/feature/Profile/Profile%20List/create_select_profile_screen.dart';
+import 'package:netflix_clone/feature/Profile/Profile%20List/profile_list.dart';
 
 class AppStarter extends StatelessWidget {
   const AppStarter({super.key});
@@ -13,7 +13,7 @@ class AppStarter extends StatelessWidget {
 
     // Kullanıcı oturum açmışsa home ekranını başlat, aksi takdirde onboard veya auth ekranını başlat
     if (user != null) {
-      return CreateSelectProfileScreen();
+      return const ProfileListScreen();
     } else {
       return const OnBoardScreen(); // veya AuthScreen();
     }
