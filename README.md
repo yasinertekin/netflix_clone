@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-# Ekran Görüntüleri
+# Screenshots
 
 <p align="center">
   <img src="images/Screenshot1.png" width="400" alt="Screenshot 1"> <img src="images/Screenshot2.png" width="400" alt="Screenshot 2">
