@@ -4,10 +4,13 @@ A new Flutter project.
 
 # Ekran Görüntüleri
 
-![github](images/Screenshot1.png)
-![github](images/Screenshot2.png)
-![github](images/Screenshot3.png)
-![github](images/Screenshot4.png)
+<p align="center">
+  <img src="images/Screenshot1.png" width="400" alt="Screenshot 1"> <img src="images/Screenshot2.png" width="400" alt="Screenshot 2">
+</p>
+<p align="center">
+  <img src="images/Screenshot3.png" width="400" alt="Screenshot 3"> <img src="images/Screenshot4.png" width="400" alt="Screenshot 4">
+</p>
+
 
 
 ## Getting Started
