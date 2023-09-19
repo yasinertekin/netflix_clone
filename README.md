@@ -4,7 +4,7 @@ A new Flutter project.
 
 # Ekran Görüntüleri
 
-![github](images/Apple iPhone 11 Pro Max Screenshot 1.png)
+![Ekran Görüntüsü](images/Apple iPhone 11 Pro Max Screenshot 1.png)
 
 ## Getting Started
 
