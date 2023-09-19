@@ -11,15 +11,15 @@ class OnBoardScreenModels {
   static final List<OnBoardScreenModel> onboardScreenItems = [
     OnBoardScreenModel(
       'onboardlaptopimage',
-      'İstediğiniz \nCihazda İzleyin',
-      "Telefonda, tablette, bilgisayarda TV'de; ekstra ücret ödemeden tüm cihazlarda izleyin.",
+      'Watch on any device you want',
+      "On the phone, tablet, computer, TV; Watch on all devices at no extra cost.",
     ),
-    OnBoardScreenModel('onboardrocketimage', 'Netflix: Yeni \nYol Arkadaşın',
-        "Uçakta, otobüste, metrobüste... \nİnternet olmasa da Netflixten \nindirdiklerini izle!"),
+    OnBoardScreenModel('onboardrocketimage', 'Netflix: Your New Companion',
+        "On the plane, on the bus, on the metrobus... Watch what I downloaded from Netflix even if there is no internet!"),
     OnBoardScreenModel(
       'onboardpartyimage',
-      'Eğlence çok \nTaahhüt yok',
-      'Bugün katılın, istediğiniz zaman \niptal edin.',
+      'Lots of fun\nNo commitment',
+      'Join today, cancel anytime.',
     ),
   ];
 }

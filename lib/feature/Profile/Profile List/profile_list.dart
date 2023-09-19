@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kartal/kartal.dart';
 import 'package:netflix_clone/feature/Detail/detail_screen.dart';
 import 'package:netflix_clone/feature/Profile/Edit%20Profile%20Bottom%20Sheet/edit_profile.dart';
-import 'package:netflix_clone/feature/Profile/View%20Model/profile_view_model.dart';
 import 'package:netflix_clone/product/mixin/app_route_mixin.dart';
 import 'package:netflix_clone/product/widgets/NetflixProgressIndicator/netflix_progress_indicator.dart';
 import 'package:netflix_clone/product/widgets/Text%20Button/edit_text_button.dart';

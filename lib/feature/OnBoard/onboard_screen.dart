@@ -137,7 +137,7 @@ class _CustomSignInButton extends StatelessWidget with MyNavigatorManager {
         minimumSize: Size(context.general.mediaQuery.size.height * 0.8, context.general.mediaQuery.size.height * 0.07),
       ),
       child: Text(
-        'Oturum Aç',
+        StringConstans.logIn,
         style: context.general.textTheme.bodyLarge?.copyWith(
           color: ColorConstants.white,
         ),

@@ -52,4 +52,5 @@ class StringConstans {
   static const String downloads = 'Downloads';
   static const String changProfile = 'Change Profile';
   static const String profileManagement = 'Profile Management';
+  static const String logIn = 'Log In';
 }

@@ -48,10 +48,6 @@ class DetailScreen extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.black,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
-        ),
         body: FutureBuilder<DocumentSnapshot<MovieTrailerModel>>(
           future: response,
           builder: (context, snapshot) {

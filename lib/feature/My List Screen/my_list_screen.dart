@@ -51,7 +51,9 @@ class _MyListScreenState extends State<MyListScreen> with TickerProviderStateMix
                 case ConnectionState.active:
                 case ConnectionState.done:
                   if (snapshot.hasError) {
-                    return Text('${StringConstans.somethingWentWrong} ${snapshot.error}');
+                    return Text(
+                      '${StringConstans.somethingWentWrong} ${snapshot.error}',
+                    );
                   }
                   if (!snapshot.hasData || !snapshot.data!.exists) {
                     return const Text('${StringConstans.dataNotFound}}');

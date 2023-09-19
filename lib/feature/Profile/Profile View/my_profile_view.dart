@@ -89,11 +89,14 @@ class _MyListRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          StringConstans.mylist,
-          style: context.general.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: ColorConstants.white,
+        Padding(
+          padding: context.padding.onlyLeftLow,
+          child: Text(
+            StringConstans.mylist,
+            style: context.general.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: ColorConstants.white,
+            ),
           ),
         ),
         const Spacer(),
