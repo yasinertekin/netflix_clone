@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+# Ekran Görüntüleri
+
+![github](/images/Apple iPhone 11 Pro Max Screenshot 1.png)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
